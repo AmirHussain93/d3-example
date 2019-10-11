@@ -1,0 +1,35 @@
+    <html>
+    <head>
+    <meta charset="utf-8">
+    <title>Zoomable treemap template</title>
+    </head>
+
+    <body>
+
+            <svg width="500"></svg>
+
+    <script src="https://code.jquery.com/jquery-1.7.2.min.js"></script>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script>
+        var data = d3.range(10);
+
+    var colors = d3.scaleLinear()
+        .domain(d3.ticks(0, 50, 11))
+        .range(["#5E4FA2", "#3288BD"]);
+            
+    var svg = d3.select("svg");
+
+    var rects = svg.selectAll(".rects")
+        .data(data)
+        .enter()
+        .append("rect")
+        .attr("y", 10)
+        .attr("height", 100)
+        .attr("x", (d,i)=>10 + i*9)
+        .attr("width", 6)
+        .attr("fill", d=>colors(d))
+        .attr("stroke", "gray");
+
+    </script>
+    </body>
+    </html>

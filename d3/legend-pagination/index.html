@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+    <meta charset="UTF-8">
+    <title>Legends</title>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <style>
+         body {
+            font: 10px sans-serif;
+        }
+        
+        .axis {
+            shape-rendering: crispEdges;
+        }
+        
+        .x.axis line {
+            stroke: lightgrey;
+        }
+        
+        .y.axis line {
+            stroke: lightgrey;
+        }
+        
+        .y.axis path {
+            fill: #666;
+            stroke: #000;
+        }
+        
+        .axis path {
+            fill: #666;
+            stroke: #000;
+        }
+    </style>
+    </head>
+
+    <body>
+        <div id="chart" style="height:300px;width:600px;">
+        </div>
+    </body>
+
+    <script>
+    var dataSet = {
+        series: ['a', 'b', 'c', 'd', 'e'],
+        data: [3, 20, 30, 8, 12]
+    }
+
+    var colors = ["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56"];
+    var width = 450
+    height = 450
+    margin = 40
+
+    // The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
+    var radius = Math.min(width, height) / 2 - margin
+
+    // append the svg object to the div called 'chart'
+    var svg = d3.select("#chart")
+        .append("svg")
+        .attr("width", 1200)
+        .attr("height", height)
+        .append("g")
+        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+
+    // set the color scale
+    var color = d3.scaleOrdinal()
+        .domain(dataSet.data)
+        .range(colors)
+
+    // Compute the position of each group on the pie:
+    var pie = d3.pie()
+        .value(function(d) { return d.value; })
+    var data_ready = pie(d3.entries(dataSet.data))
+
+    // Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
+    svg
+        .selectAll('whatever')
+        .data(data_ready)
+        .enter()
+        .append('path')
+        .attr('d', d3.arc()
+            .innerRadius(0)
+            .outerRadius(radius)
+        )
+        .attr('fill', function(d) { return (color(d.data.key)) })
+        .attr("stroke", "black")
+        .style("stroke-width", "2px")
+        .style("opacity", 0.7)
+
+
+
+
+
+
+
+
+/******************************************************************************************************/
+/***********************************************LEGEND*************************************************/
+/******************************************************************************************************/
+
+    var legendCount = dataSet.series.length;
+
+    var legendWidth = 10;
+    var legendSpacing = 6;
+
+    var netLegendHeight = (legendWidth + legendSpacing) * legendCount;
+    var legendPerPage, totalPages, pageNo;
+
+    // if (netLegendHeight / height > 1) {
+
+    legendPerPage = 2;
+    totalPages = Math.ceil(legendCount / legendPerPage);
+
+    pageNo = 1;
+
+    var startIndex = (pageNo - 1) * legendPerPage;
+    var endIndex = startIndex + legendPerPage;
+    var seriesSubset = [],
+        colorSubset = [];
+
+    for (var i = 0; i < dataSet.series.length; i++) {
+        if (i >= startIndex && i < endIndex) {
+            seriesSubset.push(dataSet.series[i]);
+            colorSubset.push(colors[i]);
+        }
+    }
+    console.log("iiiicolorSubsetiiii", colorSubset)
+
+    DrawLegendSubset(seriesSubset, colorSubset, legendPerPage, pageNo, totalPages);
+// }
+
+    function DrawLegendSubset(seriesSubset, colorSubset, legendPerPage, pageNo, totalPages) {
+
+        var legend = svg.selectAll("g.legendg")
+            .data(seriesSubset)
+            .enter().append("g")
+            .attr('class', 'legendg')
+            .attr("transform", function(d, i) {
+                return "translate(" + (width - 40) + "," + i * (legendWidth + legendSpacing) + ")";
+            });
+
+        legend.append("rect")
+            .attr("x", 45)
+            .attr("width", legendWidth)
+            .attr("height", legendWidth)
+            .attr("class", "legend")
+            .style('fill', function(d, i) {
+                return colorSubset[i];
+            });
+
+
+        legend.append("text")
+            .attr("x", 60)
+            .attr("y", 6)
+            .attr("dy", ".35em")
+            .style("text-anchor", "start")
+            .text(function(d) {
+                return d;
+            });
+
+
+        var pageText = svg.append("g")
+            .attr('class', 'pageNo')
+            .attr("transform", "translate(" + (width + 7.5) + "," + (legendPerPage + 1) * (legendWidth + legendSpacing) + ")");
+
+        pageText.append('text').text(pageNo + '/' + totalPages)
+            .attr('dx', '.25em');
+
+        var prevtriangle = svg.append("g")
+            .attr('class', 'prev')
+            .attr("transform", "translate(" + (width + 5) + "," + (legendPerPage + 1.5) * (legendWidth + legendSpacing) + ")")
+            .on('click', function() {prevLegend('ghh')})
+            .style('cursor', 'pointer');
+
+        var nexttriangle = svg.append("g")
+            .attr('class', 'next')
+            .attr("transform", "translate(" + (width + 20) + "," + (legendPerPage + 1.5) * (legendWidth + legendSpacing) + ")")
+            .on('click', nextLegend)
+            .style('cursor', 'pointer');
+
+        nexttriangle.append('polygon')
+            .style('stroke', '#000')
+            .style('fill', '#000')
+            .attr('points', '0,0, 10,0, 5,5');
+
+        prevtriangle.append('polygon')
+            .style('stroke', '#000')
+            .style('fill', '#000')
+            .attr('points', '0,5, 10,5, 5,0');
+
+        if (pageNo == totalPages) {
+            nexttriangle.style('opacity', '0.5')
+            nexttriangle.on('click', '')
+                .style('cursor', '');
+        } else if (pageNo == 1) {
+            prevtriangle.style('opacity', '0.5')
+            prevtriangle.on('click', '')
+                .style('cursor', '');
+        }
+
+    }
+
+    function prevLegend(g) {
+        console.log('g---',g)
+        pageNo--;
+
+        svg.selectAll("g.legendg").remove();
+        svg.select('.pageNo').remove();
+        svg.select('.prev').remove();
+        svg.select('.next').remove();
+
+        var startIndex = (pageNo - 1) * legendPerPage;
+        var endIndex = startIndex + legendPerPage;
+
+        var seriesSubset = [],
+            colorSubset = [];
+
+        for (var i = 0; i < dataSet.series.length; i++) {
+            if (i >= startIndex && i < endIndex) {
+                seriesSubset.push(dataSet.series[i]);
+                colorSubset.push(colors[i]);
+            }
+        }
+        console.log("iiiicolorSubsetiiii", colorSubset)
+
+        DrawLegendSubset(seriesSubset, colorSubset, legendPerPage, pageNo, totalPages);
+    }
+
+    function nextLegend() {
+        pageNo++;
+
+        svg.selectAll("g.legendg").remove();
+        svg.select('.pageNo').remove();
+        svg.select('.prev').remove();
+        svg.select('.next').remove();
+
+        var startIndex = (pageNo - 1) * legendPerPage;
+        var endIndex = startIndex + legendPerPage;
+
+        var seriesSubset = [],
+            colorSubset = [];
+
+        for (var i = 0; i < dataSet.series.length; i++) {
+            if (i >= startIndex && i < endIndex) {
+                seriesSubset.push(dataSet.series[i]);
+                colorSubset.push(colors[i]);
+            }
+        }
+
+        DrawLegendSubset(seriesSubset, colorSubset, legendPerPage, pageNo, totalPages);
+    }
+   </script>
+
+</html>

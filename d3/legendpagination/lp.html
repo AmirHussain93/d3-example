@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Legend Paging</title>
+  <style>
+    body {
+  font: 10px sans-serif;
+}
+.axis {
+  shape-rendering: crispEdges;
+}
+
+.x.axis line {
+  stroke: lightgrey;
+}
+
+.y.axis line{
+	stroke:lightgrey;
+}
+
+.y.axis path {
+  fill: #666;
+  stroke: #000;
+}
+.axis path {
+  fill: #666;
+  stroke: #000;
+}
+
+</style>
+</head>
+<body>
+	<div id="chart" style="height:400px;width:450px;">
+        </div>
+<script src="http://d3js.org/d3.v5.min.js">
+</script>
+<script type="text/javascript">
+var data = [
+			  {
+				"age":"<5",
+				"population":2704659
+			  },
+			  {
+				"age":"5-10",
+				"population":4499890
+			  },
+			  {
+				"age":"10-13",
+				"population":6736433
+			  },
+			  {
+				"age":"14-16",
+				"population":2159981
+			  },
+			  {
+				"age":"16-18",
+				"population":3853788
+			  },
+			  {
+				"age":"18-22",
+				"population":8848383
+			  },
+			  {
+				"age":"22-30",
+				"population":8384390
+			  },
+			  {
+				"age":"30-44",
+				"population":14106543
+			  },
+			  {
+				"age":"45-64",
+				"population":8819342
+			  },
+			  {
+				"age":"≥65",
+				"population":800000
+			  },
+			  {
+				"age":"30-44",
+				"population":14106543
+			  },
+			  {
+				"age":"45-64",
+				"population":8819342
+			  },
+			  {
+				"age":"≥65",
+				"population":800000
+			  },
+			  {
+				"age":"30-44",
+				"population":14106543
+			  },
+			  {
+				"age":"45-64",
+				"population":8819342
+			  },
+			  {
+				"age":"≥65",
+				"population":800000
+			  },
+			  {
+				"age":"30-44",
+				"population":14106543
+			  },
+			  {
+				"age":"45-64",
+				"population":8819342
+			  },
+			  {
+				"age":"≥65",
+				"population":800000
+			  },
+			  {
+				"age":"30-44",
+				"population":14106543
+			  },
+			  {
+				"age":"45-64",
+				"population":8819342
+			  },
+			  {
+				"age":"≥65",
+				"population":800000
+			  },
+			  {
+				"age":"30-44",
+				"population":14106543
+			  },
+			  {
+				"age":"45-64",
+				"population":8819342
+			  },
+			  {
+				"age":"≥65",
+				"population":800000
+			  },
+			  {
+				"age":"30-44",
+				"population":14106543
+			  },
+			  {
+				"age":"45-64",
+				"population":8819342
+			  },
+			  {
+				"age":"≥65",
+				"population":800000
+			  },
+			  {
+				"age":"30-44",
+				"population":14106543
+			  },
+			  {
+				"age":"45-64",
+				"population":8819342
+			  },
+			  {
+				"age":"≥65",
+				"population":800000
+			  },
+			  {
+				"age":"30-44",
+				"population":14106543
+			  },
+			  {
+				"age":"45-64",
+				"population":8819342
+			  },
+			  {
+				"age":"≥65",
+				"population":800000
+			  },
+			  {
+				"age":"30-44",
+				"population":14106543
+			  },
+			  {
+				"age":"45-64",
+				"population":8819342
+			  },
+			  {
+				"age":"≥65",
+				"population":800000
+			  },
+			  {
+				"age":"30-44",
+				"population":14106543
+			  },
+			  {
+				"age":"45-64",
+				"population":8819342
+			  },
+			  {
+				"age":"≥65",
+				"population":800000
+			  },
+			  {
+				"age":"30-44",
+				"population":14106543
+			  },
+			  {
+				"age":"45-64",
+				"population":8819342
+			  },
+			  {
+				"age":"≥65",
+				"population":800000
+			  },
+			  {
+				"age":"30-44",
+				"population":14106543
+			  },
+			  {
+				"age":"45-64",
+				"population":8819342
+			  },
+			  {
+				"age":"≥65",
+				"population":800000
+			  },
+			  {
+				"age":"30-44",
+				"population":14106543
+			  },
+			  {
+				"age":"45-64",
+				"population":8819342
+			  },
+			  {
+				"age":"≥65",
+				"population":800000
+			  },
+			  {
+				"age":"30-44",
+				"population":14106543
+			  },
+			  {
+				"age":"45-64",
+				"population":8819342
+			  },
+			  {
+				"age":"≥65",
+				"population":800000
+			  },
+			  {
+				"age":"30-44",
+				"population":14106543
+			  },
+			  {
+				"age":"45-64",
+				"population":8819342
+			  },
+			  {
+				"age":"≥65",
+				"population":800000
+			  },
+			  {
+				"age":"30-44",
+				"population":14106543
+			  },
+			  {
+				"age":"45-64",
+				"population":8819342
+			  },
+			  {
+				"age":"≥65",
+				"population":800000
+			  }
+			]
+
+
+
+            var canvasWidth = document.getElementById('chart').offsetWidth,
+                canvasHeight = document.getElementById('chart').offsetHeight;
+
+            var margin = { top: 80, right: 100, bottom: 60, left: 50 },
+                width = canvasWidth,
+                height = canvasHeight,
+                radius = 140,
+                innerradius = 0;
+
+            var color = d3.scaleOrdinal(['#4daf4a', '#377eb8', '#ff7f00', '#984ea3', '#e41a1c', '#e4651c']);
+            var regex = /[^A-Z0-9]+/ig;
+            var colors=[];
+            for(var i=0;i<20;i++){
+                colors.push(color(i));
+            }
+          
+          var svg = d3.select('#chart')
+              .append('svg')
+              .attr('width', width)
+              .attr('height', height)
+              .append('g')
+              .attr('transform', 'translate(' +
+                  (width / 2 ) + ',' + (height / 2) + ')');
+
+          svg.append("g")
+              .attr("transform", "translate(" + -(width / 2 - 130) + "," + -180 + ")")
+              .append("text")
+              .text("bibliography")
+              .attr("class", "title");
+
+          svg.append("g")
+              .attr("transform", "translate(" + -(width / 2 - 210) + "," + -180 + ")")
+              .append("text")
+              .attr("id", "expand")
+              .text("\uf065")
+              .style("font-family", "FontAwesome")
+
+          var arc = d3.arc()
+              .innerRadius(innerradius) // NEW
+              .outerRadius(radius);
+
+          var arcOver = d3.arc()
+              .innerRadius(innerradius)
+              .outerRadius(140 + 10);
+
+          var pie = d3.pie()
+              .value(function (d) {
+                  return d.population;
+              })
+              .sort(null);
+
+          var path = svg.selectAll('path')
+              .data(pie(data))
+              .enter()
+              .append('path')
+              .attr('d', arc)
+              .attr('fill', function (d, i) {
+                  return color(d.data.age);
+              })
+              .attr('id', function (d) {
+                  return d.data.age;
+              })
+              .each(function (d) {
+                  this._current = d;
+              });
+
+            
+
+            /******************************************************************************************************/
+            /***********************************************LEGEND*************************************************/
+            /******************************************************************************************************/
+              console.log(data.length)
+            var legendCount = data.length;
+
+            var legendWidth=10; var legendSpacing=6;
+
+            var netLegendHeight=(legendWidth+legendSpacing)*legendCount;
+            var legendPerPage,totalPages,pageNo;
+
+            if(netLegendHeight/height > 1){
+
+                legendPerPage=Math.floor(height/(legendWidth+legendSpacing));
+                totalPages=Math.ceil(legendCount/legendPerPage);
+
+                pageNo=1;
+
+                var startIndex=(pageNo-1)*legendPerPage;
+                var endIndex=startIndex+legendPerPage;
+                var seriesSubset=[],colorSubset=[];
+                
+                for(var i=0;i<data.length;i++){
+                    if(i>=startIndex && i<endIndex){
+                        seriesSubset.push(data[i]);
+                        colorSubset.push(colors[i]);
+                    }
+                }  
+
+                DrawLegendSubset(seriesSubset,colorSubset,legendPerPage,pageNo,totalPages);
+            }
+
+            function DrawLegendSubset(seriesSubset,colorSubset,legendPerPage,pageNo,totalPages){
+                console.log(seriesSubset,colorSubset,legendPerPage,pageNo,totalPages)
+                var legend = svg.selectAll("g.legendg")
+                .data(seriesSubset)
+                .enter().append("g")
+                .attr('class','legendg')
+                .attr("transform", function (d, i) { return "translate(" + (width-340) + ","+ i*(legendWidth+legendSpacing) +")"; });
+
+                legend.append("rect")
+                .attr("x", 45)
+                .attr("width", legendWidth)
+                .attr("height", legendWidth)
+                .attr("class", "legend")
+                .style('fill',function(d,i){return colorSubset[i];});
+                
+
+                legend.append("text")
+                .attr("x", 60)
+                .attr("y", 6)
+                .attr("dy", ".35em")
+                .style("text-anchor", "start")
+                .text(function (d) { return d.name; });
+
+
+                var pageText = svg.append("g")
+                .attr('class','pageNo')
+                .attr("transform", "translate(" + (width -340) + ","+ (legendPerPage+1)*(legendWidth+legendSpacing) +")");
+
+                pageText.append('text').text(pageNo+'/'+totalPages)
+                .attr('dx','.25em');
+
+                var prevtriangle = svg.append("g")
+                .attr('class','prev')
+                .attr("transform", "translate(" + (width-340) + ","+ (legendPerPage+1.5)*(legendWidth+legendSpacing) +")")
+                .on('click',prevLegend)
+                .style('cursor','pointer');
+
+                var nexttriangle = svg.append("g")
+                .attr('class','next')
+                .attr("transform", "translate(" + (width-320) + ","+ (legendPerPage+1.5)*(legendWidth+legendSpacing) +")")
+                .on('click',nextLegend)
+                .style('cursor','pointer');
+
+                nexttriangle.append('polygon')
+                    .style('stroke','#000')
+                    .style('fill','#000')
+                    .attr('points','0,0, 10,0, 5,5');
+
+                prevtriangle.append('polygon')
+                    .style('stroke','#000')
+                    .style('fill','#000')
+                    .attr('points','0,5, 10,5, 5,0');
+
+                if(pageNo==totalPages){
+                    nexttriangle.style('opacity','0.5')
+                    nexttriangle.on('click','')
+                    .style('cursor','');
+                }
+                else if(pageNo==1){
+                    prevtriangle.style('opacity','0.5')
+                    prevtriangle.on('click','')
+                    .style('cursor','');
+                }
+
+            }
+
+            function prevLegend(){
+                pageNo--;
+
+                svg.selectAll("g.legendg").remove();
+                svg.select('.pageNo').remove();
+                svg.select('.prev').remove();
+                svg.select('.next').remove();
+
+                var startIndex=(pageNo-1)*legendPerPage;
+                var endIndex=startIndex+legendPerPage;
+
+                var seriesSubset=[],colorSubset=[];
+
+                for(var i=0;i<data.series.length;i++){
+                    if(i>=startIndex && i<endIndex){
+                        seriesSubset.push(data.series[i]);
+                        colorSubset.push(colors[i]);
+                    }
+                }  
+
+                DrawLegendSubset(seriesSubset,colorSubset,legendPerPage,pageNo,totalPages);
+            }
+            
+            function nextLegend(){
+                pageNo++;
+
+                svg.selectAll("g.legendg").remove();
+                svg.select('.pageNo').remove();
+                svg.select('.prev').remove();
+                svg.select('.next').remove();
+
+                var startIndex=(pageNo-1)*legendPerPage;
+                var endIndex=startIndex+legendPerPage;
+
+                var seriesSubset=[],colorSubset=[];
+
+                for(var i=0;i<data.series.length;i++){
+                    if(i>=startIndex && i<endIndex){
+                        seriesSubset.push(data.series[i]);
+                        colorSubset.push(colors[i]);
+                    }
+                }  
+
+               DrawLegendSubset(seriesSubset,colorSubset,legendPerPage,pageNo,totalPages);
+            }
+</script>
+</body>
+</html>

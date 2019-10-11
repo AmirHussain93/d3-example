@@ -1,0 +1,22 @@
+[
+    { "strId": 6481, "commonName": "VEGFR2", "activityValue": 17},
+    { "strId": 6481, "commonName": "VEGFR1", "activityValue": 50},
+    { "strId": 6481, "commonName": "VEGFR", "activityValue": 12},
+    { "strId": 6481, "commonName": "EGFR", "activityValue": 0},
+    { "strId": 6481, "commonName": "TARGET/MOA UNKNOWN", "activityValue": 65},
+    { "strId": 6507, "commonName": "VEGFR2", "activityValue": 97},
+    { "strId": 6507, "commonName": "VEGFR1", "activityValue": 0},
+    { "strId": 6507, "commonName": "VEGFR", "activityValue": 27},
+    { "strId": 6507, "commonName": "EGFR", "activityValue": 10},
+    { "strId": 6507, "commonName": "TARGET/MOA UNKNOWN", "activityValue": 93},
+    { "strId": 6605, "commonName": "VEGFR2", "activityValue": 28},
+    { "strId": 6605, "commonName": "VEGFR1", "activityValue": 31},
+    { "strId": 6605, "commonName": "VEGFR", "activityValue": 68},
+    { "strId": 6605, "commonName": "EGFR", "activityValue": 22},
+    { "strId": 6605, "commonName": "TARGET/MOA UNKNOWN", "activityValue": 18},
+    { "strId": 6704, "commonName": "VEGFR2", "activityValue": 51},
+    { "strId": 6704, "commonName": "VEGFR1", "activityValue": 68},
+    { "strId": 6704, "commonName": "VEGFR", "activityValue": 22},
+    { "strId": 6704, "commonName": "EGFR", "activityValue": 43},
+    { "strId": 6704, "commonName": "TARGET/MOA UNKNOWN", "activityValue": 18}
+]

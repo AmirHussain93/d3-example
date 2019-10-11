@@ -1,0 +1,96 @@
+.d-pie {
+  width: 450px;
+  height: 400px;
+  border: 1px solid;
+  margin-left: 25px;
+}
+
+#tooltip {
+  /* position: absolute; */
+  width: 160px;
+  height: auto;
+  padding: 10px;
+  background-color: white;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  -webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+  -mox-box-shadow: 4px 4px 4px 10px rgba(0, 0, 0, 0.4);
+  box-shadow: 4px 4px 10px rbga(0, 0, 0, 0.4);
+  pointer-events: none;
+}
+#tooltip p {
+  margin: 0;
+  font-family: sans-serif;
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.tooltip {
+  /* position: absolute; */
+  font-size: 12px;
+  width:  auto;
+  height: auto;
+  pointer-events: none;
+  background-color: white;
+}
+rect.disabled {
+  fill: transparent !important;
+}
+
+.legend {
+  font-size: 12px;
+}
+
+.bar { fill: steelblue; }
+
+.title {
+  font-weight: bold;
+  font-size: 24px;
+  text-align: center;
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+text {
+pointer-events: none;
+}
+
+.grandparent text {
+font-weight: bold;
+}
+
+rect {
+fill: none;
+stroke: #fff;
+}
+
+rect.parent,
+.grandparent rect {
+stroke-width: 2px;
+}
+
+rect.parent {
+  pointer-events: none;
+}
+
+.grandparent rect {
+fill: orange;
+}
+
+.grandparent:hover rect {
+fill: #ee9700;
+}
+
+.children rect.parent,
+.grandparent rect {
+cursor: pointer;
+}
+
+.children rect.parent {
+fill: #bbb;
+fill-opacity: .5;
+}
+
+.children:hover rect.child {
+fill: #bbb;
+}

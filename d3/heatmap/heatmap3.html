@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- Load d3.js -->
+		<script src="https://d3js.org/d3.v5.js"></script>
+
+		<!-- Load color palettes -->
+		<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+    </head>
+    <style>
+        .tooltip {
+            position: absolute;
+        }
+    </style>
+    <body>
+        <button onclick="prevPage()" id="btn_prev">Prev</button>
+        <button onclick="nextPage()" id="btn_next">Next</button>
+        page: <span id="page"></span>
+        <div id="my_dataviz"></div>
+        <script src="heatmap2.js"></script>
+    </body>
+</html>
